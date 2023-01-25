@@ -6,13 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Cервис управления рассылками</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+     <style>
+	body{
+    background: linear-gradient(blue, pink);
+    background: linear-gradient(to bottom right, blue, pink);
+    background-attachment: fixed;
+	}
+   </style>
+
+
 </head>
 <body>
-<style>
-        body {
-            background-image: url("{% static 'media/background.jpg' %}");
-        }
-    </style>
+
+
 {% include 'service/includes/main-menu.html' %}
 {% block content %}
 {% endblock %}
@@ -28,8 +34,6 @@
         {% endfor%}
     </table>
 </div>
-
-
 </div>
 <script src="/static/js/bootstrap.bundle.min.js"></script>
 </body>
