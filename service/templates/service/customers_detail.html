@@ -1,0 +1,16 @@
+{% extends 'service/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="description">
+            <h2>{{object.name}}</h2>
+            <h4> {{object.email}}</h4>
+            <h1>{{object.comment}} </h1>
+            <p>{{object.mailing.state_mail}}</p>
+            <button><a class="btn btn-info" href="{% url 'service:update_customer' object.pk %}">Изменить</a></button>
+            <button><a class="btn btn-info" href="{% url 'service:delete_customer' object.pk %}">Удалить</a></button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

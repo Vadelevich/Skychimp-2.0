@@ -1,0 +1,35 @@
+{% extends 'service/base.html' %}
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Service</h5>
+    <nav class="ms-5">
+        <a class="p-2 btn btn-outline-primary" href="{% url 'service:create_customers' %}">Добавить клиента</a>
+    </nav>
+</div>
+<div class="container">
+    <table class="table">
+        <thead class="table-light">
+        <th scope="col">контактный email</th>
+        <th scope="col">фио</th>
+        <th scope="col">комментарий</th>
+        <th scope="col"></th>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+        <tr>
+            </th>
+            <td>{{object.email}}</td>
+            <td>{{object.name}}</td>
+            <td>{{object.comment}}</td>
+            <td>
+                <a class="btn btn-info" href="{% url 'service:detail_customer' object.pk %}">Просмотр</a>
+            </td>
+
+        </tr>
+        {% endfor%}
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
