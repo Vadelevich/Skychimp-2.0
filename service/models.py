@@ -64,6 +64,9 @@ class Message(models.Model):
     topic_message = models.CharField(max_length=250, verbose_name='тема письма', **NULLUBLE)
     letter = models.TextField(verbose_name='тело письма')
 
+    def __str__(self):
+        return self.topic_message
+
 
 class TryMail(models.Model):
     """ Моделька Попытка рассылки заполняется автоматически, поля:
