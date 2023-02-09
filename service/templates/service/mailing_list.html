@@ -4,7 +4,7 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">Service</h5>
     <nav class="ms-5">
         <a class="p-2 btn btn-info" href="{% url 'service:create_mail' %}">Добавить рассылку</a>
-        <a class="btn btn-info" href="{% url 'service:status' %}">Подтвердить отправку всех сообщений</a>
+        <a class="btn btn-info" href="{% url 'service:status' %}">Отправить всем сообщения сейчас</a>
     </nav>
 </div>
 <div class="container">
@@ -35,8 +35,11 @@
             <td class="table-light" style="text-align: center">
                 <a class="btn btn-info" href="{% url 'service:detail_mail' object.pk %}">Read</a>
             </td>
-
-
+            {% if perms.service.turn_off %}
+            <td class="table-light" style="text-align: center">
+                <a class="btn btn-info" href="{% url 'service:deactivate' object.pk %}">Deactivate</a>
+            </td>
+            {% endif %}
         </tr>
         {% endfor%}
 

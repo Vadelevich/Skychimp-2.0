@@ -6,19 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Cервис управления рассылками</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-     <style>
-	body{
-    background: linear-gradient(blue, pink);
-    background: linear-gradient(to bottom right, blue, pink);
-    background-attachment: fixed;
-	}
-   </style>
+    <style>
+        body {
+            background: linear-gradient(white, pink);
+            background: linear-gradient(to bottom right, white, grey);
+            background-attachment: fixed;
+        }
+    </style>
 
 
 </head>
 <body>
 
+<div class="float-end">
 
+    {% if user.is_authenticated %}
+    {% if perms.users.change_status %}
+    <a class="me-3 py-2 text-dark text-decoration-none btn btn-outline-warning"
+       href="{% url 'users:user_list' %}">Пользователи</a>
+    {% endif %}
+    <a class="me-3 py-2 text-dark text-decoration-none btn btn-outline-warning"
+       href="{% url 'service:home' %}">Главная</a>
+    <a class="me-3 py-2 text-dark text-decoration-none btn btn-outline-warning"
+       href="{% url 'blog:list' %}">Блог</a>
+    <a class="me-3 py-2 text-dark text-decoration-none btn btn-outline-warning"
+       href="{% url 'users:logout' %}">Выход</a>
+    {% else %}
+    <a class="me-3 py-2 text-dark text-decoration-none btn btn-outline-primary"
+       href="{% url 'users:login' %}">Вход</a>
+    {% endif %}
+</div>
 {% include 'service/includes/main-menu.html' %}
 {% block content %}
 {% endblock %}

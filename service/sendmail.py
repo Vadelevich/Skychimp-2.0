@@ -2,12 +2,13 @@ import datetime
 
 from django.conf import settings
 from django.core.mail import send_mail
+from django.http import request
 
 from service.models import Mailing, TryMail
 
 
-def mail_customer(**kwargs):
-    mailing_item = Mailing.objects.all()
+def mail_customer(id):
+    mailing_item = Mailing.objects.filter(user_create=id)
     for item in mailing_item:
         if (
                 item.state_mail == Mailing.STATUSE_CREATED or item.state_mail == Mailing.STATUSE_LAUNCHED) and item.first_date == datetime.date.today() and item.last_date >= datetime.date.today() and item.time_mailing >= datetime.datetime.now().time():
