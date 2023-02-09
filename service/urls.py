@@ -3,12 +3,14 @@ from django.urls import path
 from service.apps import ServiceConfig
 from service.views import CustomerListView, CustomerCreateView, MailingListView, MessageListView, MailingCreateView, \
     MessageCreateView, CustomerUpdateView, MessageUpdateView, MailingUpdateView, CustomerDeleteView, MessageDeleteView, \
-    MailingDeleteView, CustomerDetailView, mail_customer, MailingDetailView, MessageDetailView, statistic
+    MailingDeleteView, CustomerDetailView, MailingDetailView, MessageDetailView, statistic, \
+    mail_customer_confirm, turn_off_mailing, HomePageView
 
 app_name = ServiceConfig.name
 
 urlpatterns = [
-    path('', CustomerListView.as_view(), name='service'),
+    path('',HomePageView.as_view(), name='home'),
+    path('customer/', CustomerListView.as_view(), name='service'),
     path('create_customer/', CustomerCreateView.as_view(), name='create_customers'),
     path('mail/', MailingListView.as_view(), name='mail'),
     path('message/', MessageListView.as_view(), name='message'),
@@ -23,6 +25,8 @@ urlpatterns = [
     path('detail_customer/<int:pk>', CustomerDetailView.as_view(), name='detail_customer'),
     path('detail_mail/<int:pk>', MailingDetailView.as_view(), name='detail_mail'),
     path('detail_massage/<int:pk>', MessageDetailView.as_view(), name='detail_message'),
-    path('mail_customer/', mail_customer, name='status'),
+    path('mail_customer/', mail_customer_confirm, name='status'),
     path('statistic/', statistic, name='statistic'),
+    path('deactivate_mail/<int:pk>',turn_off_mailing, name='deactivate'),
+
 ]

@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from service.models import Customers, Mailing, Message
+
+admin.site.register(Customers)
+admin.site.register(Mailing)
+admin.site.register(Message)
