@@ -2,7 +2,6 @@ from datetime import datetime
 
 import pytz
 from django.conf import settings
-from django.contrib.auth import login
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.views import LoginView, PasswordResetView, \
     PasswordResetConfirmView, PasswordResetCompleteView, PasswordResetDoneView
@@ -47,7 +46,6 @@ def verify_email(request, token):
     if current_user:
         now = datetime.now(pytz.timezone(settings.TIME_ZONE))
         if now > current_user.token_expired:
-            # TODO: сделать воркер на зачистку тех, кто пробаранил 3 дня
             current_user.delete()
             return render(request, 'users/verify_token_expired.html')
 
@@ -55,18 +53,9 @@ def verify_email(request, token):
         current_user.token = None
         current_user.token_expired = None
         current_user.save()
-        # TODO: редирект на логин
-        # login(request, current_user)
-        # return render(request, 'users/verify_token_success.html')
-        # TODO: потом авторизовать и кинуть на главную
         return redirect('users:login')
 
     return render(request, 'users/verify_failed.html')
-
-
-class UserProfileView(UpdateView):
-    # TODO: когда Оля не будет смотреть сделаем
-    pass
 
 
 class CustomPasswordResetView(PasswordResetView):
@@ -106,15 +95,15 @@ def confirm_new_generated_password(request):
     return redirect(...)
 
 
-
-
 class UsersListView(ListView):
     model = User
     template_name = 'user_list.html'
 
+
 @permission_required('users.change_status')
-def user_status_change(request,pk):
-    current_user = get_object_or_404(User,pk=pk)
+def user_status_change(request, pk):
+    """Активация/ деактивация пользователей для менеджера"""
+    current_user = get_object_or_404(User, pk=pk)
     if current_user.is_superuser:
         return HttpResponseForbidden()
     if current_user.is_active:

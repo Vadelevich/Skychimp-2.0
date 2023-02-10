@@ -9,7 +9,7 @@ from service.views import CustomerListView, CustomerCreateView, MailingListView,
 app_name = ServiceConfig.name
 
 urlpatterns = [
-    path('',HomePageView.as_view(), name='home'),
+    path('', HomePageView.as_view(), name='home'),
     path('customer/', CustomerListView.as_view(), name='service'),
     path('create_customer/', CustomerCreateView.as_view(), name='create_customers'),
     path('mail/', MailingListView.as_view(), name='mail'),
@@ -27,6 +27,6 @@ urlpatterns = [
     path('detail_massage/<int:pk>', MessageDetailView.as_view(), name='detail_message'),
     path('mail_customer/', mail_customer_confirm, name='status'),
     path('statistic/', statistic, name='statistic'),
-    path('deactivate_mail/<int:pk>',turn_off_mailing, name='deactivate'),
+    path('deactivate_mail/<int:pk>', turn_off_mailing, name='deactivate'),
 
 ]

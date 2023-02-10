@@ -17,8 +17,6 @@ from service.sendmail import mail_customer
 class HomePageView(TemplateView):
     template_name = 'service/home.html'
 
-
-
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         # context_data['blog'] = Article.objects.filter(is_published=True).order_by('?')[:4]
@@ -31,13 +29,14 @@ class HomePageView(TemplateView):
 
 def statistic(request):
     context = {
-        'object_list':TryMail.objects.all()
+        'object_list': TryMail.objects.all()
     }
-    return render(request, 'service/statistic.html',context)
+    return render(request, 'service/statistic.html', context)
 
 
 class CustomerListView(ListView):
     model = Customers
+
     def get_queryset(self):
         return Customers.objects.filter(user_create=self.request.user)
 
@@ -55,8 +54,10 @@ class MailingListView(ListView):
 
 class MessageListView(ListView):
     model = Message
+
     def get_queryset(self):
         return Message.objects.filter(user_create=self.request.user)
+
 
 class CustomerCreateView(CreateView):
     model = Customers
@@ -65,11 +66,10 @@ class CustomerCreateView(CreateView):
 
     def form_valid(self, form):
         if form.is_valid():
-            self.object = form.save(commit=False)   # Подготовиться обьект с данными из формы
+            self.object = form.save(commit=False)  # Подготовиться обьект с данными из формы
             self.object.user_create = self.request.user  # В поле user_create запишится пользователь который делает запрос
             self.object.save()
         return super().form_valid(form)
-
 
 
 class MailingCreateView(CreateView):
@@ -79,7 +79,7 @@ class MailingCreateView(CreateView):
 
     def form_valid(self, form):
         if form.is_valid():
-            self.object = form.save(commit=False)   # Подготовиться обьект с данными из формы
+            self.object = form.save(commit=False)  # Подготовиться обьект с данными из формы
             self.object.user_create = self.request.user  # В поле user_create запишится пользователь который делает запрос
             self.object.save()
         return super().form_valid(form)
@@ -91,8 +91,6 @@ class MailingCreateView(CreateView):
         return context_data
 
 
-
-
 class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
@@ -100,11 +98,10 @@ class MessageCreateView(CreateView):
 
     def form_valid(self, form):
         if form.is_valid():
-            self.object = form.save(commit=False)   # Подготовиться обьект с данными из формы
+            self.object = form.save(commit=False)  # Подготовиться обьект с данными из формы
             self.object.user_create = self.request.user  # В поле user_create запишится пользователь который делает запрос
             self.object.save()
         return super().form_valid(form)
-
 
 
 class CustomerUpdateView(UpdateView):
@@ -115,6 +112,7 @@ class CustomerUpdateView(UpdateView):
     def get_queryset(self):
         return Customers.objects.filter(user_create=self.request.user)
 
+
 class MessageUpdateView(UpdateView):
     model = Message
     form_class = MessageForm
@@ -122,7 +120,6 @@ class MessageUpdateView(UpdateView):
 
     def get_queryset(self):
         return Message.objects.filter(user_create=self.request.user)
-
 
 
 class MailingUpdateView(UpdateView):
@@ -178,18 +175,19 @@ class MessageDetailView(DetailView):
     def get_queryset(self):
         return Message.objects.filter(user_create=self.request.user)
 
+
 def mail_customer_confirm(request):
+    """Кнопка отправки сообщения """
     id = request.user.id
     mail_customer(id)
     return redirect(reverse('service:mail'))
 
 
 @permission_required('service.turn_off')
-def turn_off_mailing(request,pk):
-    current_mailing = get_object_or_404(Mailing,pk=pk)
+def turn_off_mailing(request, pk):
+    """Контроллер смены статуса рассылки для менеджера"""
+    current_mailing = get_object_or_404(Mailing, pk=pk)
     if current_mailing:
         current_mailing.state_mail = Mailing.STATUSE_DEACTIVATION
         current_mailing.save()
     return redirect(request.META.get('HTTP_REFERER'))
-
-

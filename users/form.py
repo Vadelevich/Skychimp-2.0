@@ -9,7 +9,6 @@ class SigninForm(StyleFormMixin, AuthenticationForm):
 
 
 class SignupForm(StyleFormMixin, UserCreationForm):
-
     class Meta:
         model = User
         fields = ("email",)
@@ -18,6 +17,3 @@ class SignupForm(StyleFormMixin, UserCreationForm):
 
 class CustomPasswordResetForm(StyleFormMixin, PasswordResetForm):
     pass
-
-
-

@@ -4,13 +4,15 @@ from django.utils.datetime_safe import date
 
 NULLUBLE = {'blank': True, 'null': True}
 
+
 class Customers(models.Model):
     """ Модель для клиентов сервиса поля :
     - контактный email
     - фио
     - комментарий"""
 
-    user_create = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,verbose_name='пользователь',**NULLUBLE)
+    user_create = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь',
+                                    **NULLUBLE)
     email = models.CharField(max_length=150, verbose_name='контактный email')
     name = models.CharField(max_length=250, verbose_name='фио')
     comment = models.TextField(verbose_name='комментарий', **NULLUBLE)
@@ -38,14 +40,15 @@ class Mailing(models.Model):
     STATUSE_COMPLETED = 'completed,'
     STATUSE_CREATED = 'created'
     STATUSE_LAUNCHED = 'launched'
-    STATUSE_DEACTIVATION= 'deactivated'
+    STATUSE_DEACTIVATION = 'deactivated'
     STATUSES = (
         ('completed', 'завершена'),
         ('created', 'создана'),
         ('launched', 'запущена'),
         ('deactivated', 'деактивирован'),
     )
-    user_create = models.ForeignKey(settings.AUTH_USER_MODEL,verbose_name='пользователь',on_delete=models.CASCADE,**NULLUBLE)
+    user_create = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='пользователь', on_delete=models.CASCADE,
+                                    **NULLUBLE)
     add_customer = models.ForeignKey('service.Customers', verbose_name='Клиент', on_delete=models.SET_NULL, null=True)
     add_message = models.ForeignKey('service.Message', verbose_name='Сообщение', on_delete=models.SET_NULL, null=True)
     time_mailing = models.TimeField(verbose_name='время рассылки', **NULLUBLE)
@@ -56,9 +59,8 @@ class Mailing(models.Model):
     first_date = models.DateField(default=date.today, verbose_name='начальная_дата', )
     last_date = models.DateField(default=date.today, verbose_name='конечная_дата', )
 
-
     class Meta:
-        permissions =[
+        permissions = [
             ('turn_off',
              'Can turn off mailing')
         ]
@@ -70,7 +72,8 @@ class Message(models.Model):
     - тело письма
     """
 
-    user_create = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='пользователь',on_delete=models.CASCADE, **NULLUBLE)
+    user_create = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='пользователь', on_delete=models.CASCADE,
+                                    **NULLUBLE)
     topic_message = models.CharField(max_length=250, verbose_name='тема письма', **NULLUBLE)
     letter = models.TextField(verbose_name='тело письма')
 
@@ -84,7 +87,6 @@ class TryMail(models.Model):
     - статус попытки
     - ответ почтового сервера, если он был
     """
-
 
     date = models.DateTimeField(auto_now_add=True, verbose_name='дата и время последней попытки')
     status = models.CharField(max_length=15, verbose_name='статус попытки')

@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env_path = BASE_DIR/ '.env'
+env_path = BASE_DIR / '.env'
 load_dotenv(dotenv_path=env_path)
 
 # Quick-start development settings - unsuitable for production
@@ -131,7 +131,6 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 BASE_URL = os.getenv('BASE_URL')
 
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -147,12 +146,10 @@ CRONJOBS = [
     ('*/5 * * * *', 'service.sendmail.mail_customer')
 ]
 
-
-
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/users/'
 LOGIN_REDIRECT_URL = 'service/'
-LOGOUT_REDIRECT_URL ='/'
+LOGOUT_REDIRECT_URL = '/'
 
 CACHE_ENABLED = os.getenv('CACHE_ENABLED')
 

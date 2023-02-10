@@ -23,12 +23,6 @@ class ArticleDetailView(DetailView):
     """ Вывод одной единственной статьи: done """
     model = Blog
 
-
-
 # deprecated
 # class ArticleDeleteView(DeleteView):
 #     pass
-
-
-
-

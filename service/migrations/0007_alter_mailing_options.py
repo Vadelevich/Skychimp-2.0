@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('service', '0006_customers_user_create_mailing_user_create_and_more'),
     ]
