@@ -84,11 +84,14 @@ class MailingCreateView(CreateView):
             self.object.save()
         return super().form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        form = context_data.get('form')
-        # form.initial['add_customer'].queryset = Customers.objects.filter(user_create=self.request.user)
-        return context_data
+    def get_form_kwargs(self):
+        """ Passes the request object to the form class.
+         This is necessary to only display members that belong to a given user"""
+
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'request': self.request.user})
+        return kwargs
+
 
 
 class MessageCreateView(CreateView):

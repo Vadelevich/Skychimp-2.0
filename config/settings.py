@@ -22,12 +22,12 @@ load_dotenv(dotenv_path=env_path)
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-b71*&g@ankgymi2ys!_9#zz8oupc%*hd4&eyk6h8)6jh3_!a^s'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -80,11 +80,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'service',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '1991',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'PASSWORD': os.getenv('PASSWORD_DB'),
+        'HOST': 'db',
+        'PORT': 5432,
+
     }
 }
 
@@ -142,10 +143,10 @@ EMAIL_USE_SSL = True
 USE_L10N = False
 DATE_INPUT_FORMATS = ['%d-%m-%Y']
 
+
 CRONJOBS = [
     ('*/5 * * * *', 'service.sendmail.mail_customer')
 ]
-
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/users/'
 LOGIN_REDIRECT_URL = 'service/'
