@@ -8,21 +8,15 @@
 
 ```bash
 
-source env/bin/activate 
-pip install -r requirement.txt
+docker-compose up -d --build
 
 ```
 
-После этого необходимо в config/settings.py изменить индивидуальные настройки 
-Пример и перечень переменных лежит в файле .env_example
+Чтобы закрыть:
 
 ```bash
 
-python3 manage.py makemigrations
-python3 manage.py migrate
-python3 manage.py runserver
-
-```
+docker-compose down
 
 После проделанных команд проект будет доступен по адресу http://127.0.0.1:8000/
 
