@@ -11,6 +11,18 @@ class CustomerForm(StyleFormMixin, forms.ModelForm):
 
 
 class MailingForm(StyleFormMixin, forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        """ Grants access to the request object so that only members of the current user
+        are given as options"""
+
+        self.request = kwargs.pop('request')
+        super().__init__(*args, **kwargs)
+        self.fields['add_customer'].queryset = Customers.objects.filter(
+            user_create=self.request)
+        self.fields['add_message'].queryset = Message.objects.filter(
+            user_create=self.request)
+
     STATUSES = (
         ('completed', 'завершена'),
         ('created', 'создана'),
